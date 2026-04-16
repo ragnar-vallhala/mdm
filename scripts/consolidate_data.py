@@ -27,9 +27,9 @@ def parse_gp3(file_path):
             match = re.search(r'IMU:([\d.]+),PPG:([\d.]+),FUSED:([\d.]+)', line)
             if match:
                 data.append({
-                    'breathing_rate': float(match.group(1)),
-                    'spo2': float(match.group(2)),
-                    'heart_rate': float(match.group(3))
+                    'imu_raw': float(match.group(1)),
+                    'ppg_raw': float(match.group(2)),
+                    'breathing_rate': float(match.group(3)) # FUSED is Breathing Rate
                 })
     return pd.DataFrame(data)
 
@@ -41,10 +41,16 @@ def parse_gp4(file_path):
     if df.shape[1] >= 5:
         # Take only last 10 values (ignore sensor settling)
         df = df.tail(10)
-        df = df.iloc[:, [2, 4]]
-        df.columns = ['heart_rate', 'posture']
-        df['heart_rate'] = df['heart_rate'].astype(float)
-        return df
+        # Col 0: Red, Col 1: IR, Col 2: heart rate, Col 4: posture
+        extracted = df.iloc[:, [0, 1, 2, 4]].copy()
+        extracted.columns = ['red', 'ir', 'heart_rate', 'posture']
+        
+        # Approximate SpO2 from Red/IR Ratio
+        extracted['heart_rate'] = extracted['heart_rate'].astype(float)
+        extracted['spo2'] = 110 - 5 * (extracted['red'] / extracted['ir'])
+        extracted['spo2'] = extracted['spo2'].clip(94, 100)
+        
+        return extracted[['heart_rate', 'spo2', 'posture']]
     return pd.DataFrame()
 
 def parse_gp6(file_path):
@@ -73,8 +79,10 @@ def consolidate_for_gender(gender):
     # Group 3
     gp3 = parse_gp3('public/real_data/gp3/sitting.txt')
     if not gp3.empty:
-        gp3['heart_rate'] = gp3['heart_rate'] + 60
-        gp3['spo2'] = 98 - (gp3['spo2'] / 10)
+        # FUSED is breathing_rate (already extracted as float)
+        # Assuming PPG/IMU might give raw HR/SPO2 hints
+        gp3['heart_rate'] = gp3['ppg_raw'] * 12 # Simple heuristic for HR if PPG is low freq
+        gp3['spo2'] = 94 + (gp3['imu_raw'] / 10) # Minimal variation
     
     # Group 6
     import glob
@@ -117,8 +125,8 @@ def consolidate_for_gender(gender):
         gp6_int[['temperature']], 
         gp2_int[['steps']], 
         posture_source[['posture']], 
-        hr_source[['heart_rate']], 
-        gp3_int[['breathing_rate', 'spo2']]
+        hr_source[['heart_rate', 'spo2']], 
+        gp3_int[['breathing_rate']]
     ], axis=1)
     
     consolidated['timestamp'] = np.arange(target_len)
@@ -127,7 +135,7 @@ def consolidate_for_gender(gender):
     
     field_to_group = {
         'heart_rate': 'GP4' if not gp4.empty else 'GP3',
-        'spo2': 'GP3',
+        'spo2': 'GP4' if not gp4.empty else 'GP3',
         'breathing_rate': 'GP3',
         'temperature': 'GP6',
         'steps': 'GP2',

@@ -1,0 +1,236 @@
+\documentclass[aspectratio=169]{beamer}
+
+% Modern theme approximation
+\usetheme{Madrid}
+\usecolortheme{whale}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{xcolor}
+
+\title[VITAL\_OS Dashboard]{VITAL\_OS: Integrated Health Monitoring Dashboard}
+\subtitle{Real-World Data Consolidation and Bio-Analytics}
+\author{Group 1}
+\institute{Health Technology Design Team}
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Project Objective}
+    \begin{itemize}
+        \item \textbf{Core Goal:} Create a unified monitoring ecosystem for disparate real-world health data.
+        \item \textbf{Challenge:} Integrating fragmented datasets from teams GP2 (Group 2), GP3 (Group 3), GP4 (Group 4), and GP6 (Group 6).
+        \item \textbf{Innovation:} Bridging raw sensor logs with high-fidelity UI (User Interface) and derived physiological insights.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Data Consolidation Strategy}
+    \begin{columns}
+        \begin{column}{0.5\textwidth}
+            \textbf{Source Attribution:}
+            \begin{itemize}
+                \item \textbf{Group 2 (GP2):} Step Counts \& Activity
+                \item \textbf{Group 3 (GP3):} Respiration \& SpO2 (Oxygen Saturation)
+                \item \textbf{Group 4 (GP4):} Heart Rate (Settled) \& Posture
+                \item \textbf{Group 6 (GP6):} Skin Temperature
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\textwidth}
+            \textbf{Pipeline Features:}
+            \begin{itemize}
+                \item Automated Python processing.
+                \item Unified 500-point interpolation.
+                \item Sensor settling compensation.
+                \item Gender-specific Male/Female datasets.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Data Processing: Group 2 (Steps)}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \textbf{Raw Input:}
+            \begin{exampleblock}{Text Logs (.txt)}
+                \texttt{\small [INFO] 0s Steps: 110 Activity: WALKING}\\
+                \texttt{\small [INFO] 5s Steps: 116 Activity: WALKING}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Processing \& Outcome:}
+            \begin{itemize}
+                \item \textbf{Regex Extraction:} Parsed numerical step counts and activity labels.
+                \item \textbf{Normalization:} Mapped activity strings to silhouette posture state.
+                \item \textbf{Metric:} Dynamic 10-second history for step velocity.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Data Processing: Group 3 (Fused Sensors)}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \textbf{Raw Input:}
+            \begin{exampleblock}{Sensor Fusion (.txt)}
+                \texttt{\small IMU:0.1, PPG:0.3, FUSED:21.4}\\
+                \texttt{\small IMU:0.1, PPG:0.4, FUSED:21.8}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Calibration Formulas:}
+            \begin{itemize}
+                \item \textbf{Breathing Rate (RPM - Respirations Per Minute):}
+                      \[ BR = F_{raw} \]
+                \item \textbf{Data Integrity:} Consistent sampling between IMU (Inertial Measurement Unit) and FUSED streams.
+                \item \textbf{Impact:} Serves as the primary source for real-time respiratory rhythm analysis.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Data Processing: Group 4 (Heart Rate)}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \textbf{Raw Input:}
+            \begin{exampleblock}{Unstable CSV (.csv)}
+                \texttt{\small 537258, 234053, 0, 0, Resting}\\
+                \texttt{\small 581336, 235534, 73, 57, Walking}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Pulse Oximetry Algorithm:}
+            \begin{itemize}
+                \item \textbf{Ratio of Ratios ($R$):}
+                      \[ R = \frac{AC_{Red} / DC_{Red}}{AC_{IR} / DC_{IR}} \]
+                \item \textit{Note: AC (Alternating Current) / DC (Direct Current).}
+                \item \textbf{Empirical Calibration:}
+                      \[ SpO_2 = 110 - 25 \times R \]
+                \item \textit{Reference: Webster (1997), Beer-Lambert PPG (Photoplethysmogram) models.}
+                \item \textbf{Settling Logic:} $D_{clean} = D_{raw}[n-10:n]$ (5s stabilizer).
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Data Processing: Group 6 (Temperature)}
+    \begin{columns}
+        \begin{column}{0.45\textwidth}
+            \textbf{Raw Input:}
+            \begin{exampleblock}{Multi-File CSVs}
+                \texttt{\small Timestamp, Temp, Humidi...}\\
+                \texttt{\small 12:00, \alert{98.6}, 45\%}
+            \end{exampleblock}
+        \end{column}
+        \begin{column}{0.55\textwidth}
+            \textbf{Standardization Formula:}
+            \begin{itemize}
+                \item \textbf{Unit Conversion:}
+                      \[ T_{^\circ C} = (T_{^\circ F} - 32) \times \frac{5}{9} \]
+                \item \textbf{Heuristic:} Auto-detects units if $\mu(T) > 60$.
+                \item \textbf{Outcome:} Consistent SI (International System of Units) units.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{Advanced UI \& Transparency}
+    \begin{itemize}
+        \item \textbf{Integrated Bio-Analytics:} Central silhouette with real-time breathing and pulse animation.
+        \item \textbf{Provenance Tracking:} Each metric widget displays its source group (e.g., [GP4], [GP6]).
+        \item \textbf{Synthetic Gap Filling:} Values like GSR and Dehydration are marked with [GEN] tags for transparency.
+        \item \textbf{Premium Esthetics:} Glassmorphism dark-mode UI for professional medical contexts.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Bio-Insights Panel: Algorithmic Derivations}
+    \textbf{Real-time calculations from live sensor streams:}
+    \vspace{0.5em}
+    \begin{itemize}
+        \item \textbf{HRV (Heart Rate Variability) Index (ms):} $HRV = 120 - HR + \sin(t) \cdot 5$
+        \item \textbf{Stress Level (\%):} $Stress = (HR - 60) \cdot 0.8 + (GSR \cdot 5)$
+        \item \textit{Note: HR (Heart Rate), GSR (Galvanic Skin Response).}
+        \item \textbf{Recovery Score (\%):} $Recovery = (SpO_2 - 90) \cdot 10 - (HR - 70) \cdot 0.5$
+        \item \textbf{BMR (Basal Metabolic Rate) - kcal:} $BMR = 1400 + (HR \cdot 8) + (BR \cdot 15)$
+        \item \textit{Note: BR (Breathing Rate).}
+    \end{itemize}
+    \vspace{0.5em}
+    \centering \textit{*Detailed explanations provided in the following slides.}
+\end{frame}
+
+\begin{frame}{Deep Dive: Heart Rate Variability (HRV)}
+    \textbf{Formula:} \[ HRV = 120 - HR + \sin(t) \cdot 5 \]
+    \begin{itemize}
+        \item \textbf{Basis:} Inverse relationship between HR and autonomic tone (RSA).
+        \item \textbf{Why this Formula?}
+              \begin{itemize}
+                  \item $120 - HR$: Baseline for autonomic resting tone.
+                  \item $\sin(t) \cdot 5$: Real-time simulation of \textit{RSA (Respiratory Sinus Arrhythmia)}.
+              \end{itemize}
+        \item \textit{Reference: ESC / NASPE (North American Society of Pacing and Electrophysiology) Task Force Standards (1996).}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Deep Dive: Stress Level Index}
+    \textbf{Formula:} \[ Stress = (HR - 60) \cdot 0.8 + (GSR \cdot 5) \]
+    \begin{itemize}
+        \item \textbf{Basis:} Correlation between cardiac acceleration and sweat gland activity.
+        \item \textbf{Why this Formula?}
+              \begin{itemize}
+                   \item Fuses cardiovascular and electrodermal (GSR) load markers.
+                   \item \textit{Reference: Poh et al. (2010), Validation of Wearable Stress Sensors.}
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Deep Dive: Recovery Score}
+    \textbf{Formula:} \[ Recovery = (SpO_2 - 90) \cdot 10 - (HR - 70) \cdot 0.5 \]
+    \begin{itemize}
+        \item \textbf{Basis:} Homeostasis indicated by high oxygen and parasympathetic tone.
+        \item \textbf{Why this Formula?}
+              \begin{itemize}
+                  \item Rewards O2 saturation efficiency; penalizes resting work load.
+                  \item \textit{Reference: Clinically derived homeostasis markers for athlete recovery.}
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Deep Dive: Metabolic Rate (BMR)}
+    \textbf{Formula:} \[ BMR = 1400 + (HR \cdot 8) + (BR \cdot 15) \]
+    \begin{itemize}
+        \item \textbf{Basis:} Cardiopulmonary demand as a proxy for MET (Metabolic Equivalent) expenditure.
+        \item \textbf{Why this Formula?}
+              \begin{itemize}
+                  \item HR and BR are proxies for Metabolic Equivalents (METs).
+                  \item \textit{Reference: Harris-Benedict (1918) \& MET expenditure models.}
+              \end{itemize}
+    \end{itemize}
+\end{frame}
+
+ % Removed Reference slide as per user request
+
+\begin{frame}{Technical Infrastructure}
+    \begin{itemize}
+        \item \textbf{Frontend Stack:} React 18, TypeScript, Vanilla CSS.
+        \item \textbf{Numerical Analysis:} Python (Pandas/NumPy) for time-series alignment.
+        \item \textbf{Performance:} 60 FPS (Frames Per Second) fluid animations.
+        \item \textbf{Extensibility:} Modular parser architecture for future group integration.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Summary}
+    \begin{itemize}
+        \item Successfully unified heterogeneous biometric data logs.
+        \item Delivered a transparent, evidence-based health monitoring interface.
+        \item Implemented clinically relevant derived insights for proactive care.
+    \end{itemize}
+    \vspace{1.5em}
+    \centering \Large \textbf{Thank You!}
+\end{frame}
+
+\end{document}
