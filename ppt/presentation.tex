@@ -13,8 +13,9 @@
 \title[VITAL\_OS Dashboard]{VITAL\_OS: Integrated Health Monitoring Dashboard}
 \subtitle{Real-World Data Consolidation and Bio-Analytics}
 \author{Group 1}
-\institute{Health Technology Design Team}
+\institute{Medical Device Manufacturing}
 \date{\today}
+\titlegraphic{\includegraphics[width=2.5cm]{qr-code.png}}
 
 \begin{document}
 
@@ -157,10 +158,9 @@
         \item \textit{Note: HR (Heart Rate), GSR (Galvanic Skin Response).}
         \item \textbf{Recovery Score (\%):} $Recovery = (SpO_2 - 90) \cdot 10 - (HR - 70) \cdot 0.5$
         \item \textbf{BMR (Basal Metabolic Rate) - kcal:} $BMR = 1400 + (HR \cdot 8) + (BR \cdot 15)$
-        \item \textit{Note: BR (Breathing Rate).}
     \end{itemize}
     \vspace{0.5em}
-    \centering \textit{*Detailed explanations provided in the following slides.}
+    \centering \textit{*Baseline calibrated against a healthy study cohort (Avg Age: 22--25 years).}
 \end{frame}
 
 \begin{frame}{Deep Dive: Heart Rate Variability (HRV)}
@@ -229,8 +229,17 @@
         \item Delivered a transparent, evidence-based health monitoring interface.
         \item Implemented clinically relevant derived insights for proactive care.
     \end{itemize}
-    \vspace{1.5em}
-    \centering \Large \textbf{Thank You!}
+    \vspace{1em}
+    \begin{columns}
+        \begin{column}{0.7\textwidth}
+             \centering \Large \textbf{Thank You!}
+        \end{column}
+        \begin{column}{0.3\textwidth}
+             \centering
+             \includegraphics[width=2.5cm]{qr-code.png}\\
+             \tiny \textit{Scan to access VITAL\_OS UI}
+        \end{column}
+    \end{columns}
 \end{frame}
 
 \end{document}

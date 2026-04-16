@@ -22,6 +22,9 @@ export const HumanSilhouette: React.FC<SilhouetteProps> = ({ gender, hr, br, spo
     const metabolicRate = (1400 + (hr * 8) + (br * 15)).toFixed(0);
     const recoveryScore = Math.max(0, Math.min(100, (spo2 - 90) * 10 - (hr - 70) * 0.5)).toFixed(0);
 
+    // Dynamic Biological Age Score (relative to 22-25 baseline)
+    const bioAgeScore = ((parseFloat(stressLevel) / 25) - (parseFloat(hrv) / 30) - (parseFloat(recoveryScore) / 20)).toFixed(1);
+
     return (
         <div className={`relative flex items-center justify-center w-full h-full max-h-[80vh] transition-all duration-700`}>
             {/* Insights Toggle Button */}
@@ -86,7 +89,10 @@ export const HumanSilhouette: React.FC<SilhouetteProps> = ({ gender, hr, br, spo
                         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col gap-6">
                             <div className="flex items-center justify-between px-2">
                                 <span className="text-white/30 text-[11px] uppercase font-black tracking-widest">Biological Age Score</span>
-                                <span className="text-xl font-black text-white">-2.4 <span className="text-xs font-normal opacity-40 ml-1">Years</span></span>
+                                <span className="text-xl font-black text-white">
+                                    {parseFloat(bioAgeScore) > 0 ? `+${bioAgeScore}` : bioAgeScore}
+                                    <span className="text-xs font-normal opacity-40 ml-1">Years</span>
+                                </span>
                             </div>
                             <div className="bg-white/[0.03] rounded-3xl p-6 border border-white/10 backdrop-blur-md">
                                 <p className="text-xs text-white/50 leading-relaxed italic font-medium">
