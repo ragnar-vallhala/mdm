@@ -1,0 +1,221 @@
+[INFO] WiFi: OK | Steps: 0 | Var: 52957.99 | Activity: RESTING
+[INFO] WiFi: OK | Steps: 0 | Var: 133995.56 | Activity: RESTING
+>>> STEP DETECTED! Total: 1
+[INFO] WiFi: OK | Steps: 1 | Var: 590673.81 | Activity: RESTING
+[INFO] WiFi: OK | Steps: 1 | Var: 2830981.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 2
+[INFO] WiFi: OK | Steps: 2 | Var: 6929001.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 3
+[INFO] WiFi: OK | Steps: 3 | Var: 399437.72 | Activity: RESTING
+[INFO] WiFi: OK | Steps: 3 | Var: 479660.84 | Activity: RESTING
+>>> STEP DETECTED! Total: 4
+[INFO] WiFi: OK | Steps: 4 | Var: 734088.50 | Activity: RESTING
+>>> STEP DETECTED! Total: 5
+>>> STEP DETECTED! Total: 6
+[INFO] WiFi: OK | Steps: 6 | Var: 17909448.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 7
+>>> STEP DETECTED! Total: 8
+[INFO] WiFi: OK | Steps: 8 | Var: 15638602.00 | Activity: WALKING
+[INFO] WiFi: OK | Steps: 8 | Var: 797972.25 | Activity: RESTING
+[INFO] WiFi: OK | Steps: 8 | Var: 1393342.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 9
+[INFO] WiFi: OK | Steps: 9 | Var: 6950833.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 10
+[INFO] WiFi: OK | Steps: 10 | Var: 4021567.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 11
+>>> STEP DETECTED! Total: 12
+[INFO] WiFi: OK | Steps: 12 | Var: 6653913.00 | Activity: WALKING
+[INFO] WiFi: OK | Steps: 12 | Var: 404303.41 | Activity: RESTING
+>>> STEP DETECTED! Total: 13
+>>> STEP DETECTED! Total: 14
+[INFO] WiFi: OK | Steps: 14 | Var: 1010592.38 | Activity: WALKING
+>>> STEP DETECTED! Total: 15
+>>> STEP DETECTED! Total: 16
+>>> STEP DETECTED! Total: 17
+[INFO] WiFi: OK | Steps: 17 | Var: 2755163.75 | Activity: WALKING
+>>> STEP DETECTED! Total: 18
+>>> STEP DETECTED! Total: 19
+>>> STEP DETECTED! Total: 20
+>>> STEP DETECTED! Total: 21
+[INFO] WiFi: OK | Steps: 21 | Var: 2567112.25 | Activity: WALKING
+>>> STEP DETECTED! Total: 22
+>>> STEP DETECTED! Total: 23
+>>> STEP DETECTED! Total: 24
+[INFO] WiFi: OK | Steps: 24 | Var: 4852389.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 25
+>>> STEP DETECTED! Total: 26
+>>> STEP DETECTED! Total: 27
+>>> STEP DETECTED! Total: 28
+[INFO] WiFi: OK | Steps: 28 | Var: 3599228.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 29
+>>> STEP DETECTED! Total: 30
+>>> STEP DETECTED! Total: 31
+>>> STEP DETECTED! Total: 32
+[INFO] WiFi: OK | Steps: 32 | Var: 3654993.25 | Activity: WALKING
+>>> STEP DETECTED! Total: 33
+>>> STEP DETECTED! Total: 34
+>>> STEP DETECTED! Total: 35
+>>> STEP DETECTED! Total: 36
+[INFO] WiFi: OK | Steps: 36 | Var: 5332092.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 37
+>>> STEP DETECTED! Total: 38
+>>> STEP DETECTED! Total: 39
+>>> STEP DETECTED! Total: 40
+[INFO] WiFi: OK | Steps: 40 | Var: 4345666.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 41
+>>> STEP DETECTED! Total: 42
+>>> STEP DETECTED! Total: 43
+>>> STEP DETECTED! Total: 44
+[INFO] WiFi: OK | Steps: 44 | Var: 3574029.75 | Activity: WALKING
+>>> STEP DETECTED! Total: 45
+>>> STEP DETECTED! Total: 46
+[INFO] WiFi: OK | Steps: 46 | Var: 2669559.75 | Activity: WALKING
+>>> STEP DETECTED! Total: 47
+>>> STEP DETECTED! Total: 48
+>>> STEP DETECTED! Total: 49
+[INFO] WiFi: OK | Steps: 49 | Var: 3353619.75 | Activity: WALKING
+>>> STEP DETECTED! Total: 50
+>>> STEP DETECTED! Total: 51
+>>> STEP DETECTED! Total: 52
+>>> STEP DETECTED! Total: 53
+>>> STEP DETECTED! Total: 54
+[INFO] WiFi: OK | Steps: 54 | Var: 4813998.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 55
+>>> STEP DETECTED! Total: 56
+>>> STEP DETECTED! Total: 57
+>>> STEP DETECTED! Total: 58
+[INFO] WiFi: OK | Steps: 58 | Var: 6370089.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 59
+>>> STEP DETECTED! Total: 60
+>>> STEP DETECTED! Total: 61
+[INFO] WiFi: OK | Steps: 61 | Var: 3607629.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 62
+>>> STEP DETECTED! Total: 63
+>>> STEP DETECTED! Total: 64
+>>> STEP DETECTED! Total: 65
+[INFO] WiFi: OK | Steps: 65 | Var: 4703798.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 66
+>>> STEP DETECTED! Total: 67
+>>> STEP DETECTED! Total: 68
+>>> STEP DETECTED! Total: 69
+[INFO] WiFi: OK | Steps: 69 | Var: 5843982.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 70
+>>> STEP DETECTED! Total: 71
+>>> STEP DETECTED! Total: 72
+>>> STEP DETECTED! Total: 73
+[INFO] WiFi: OK | Steps: 73 | Var: 7037407.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 74
+>>> STEP DETECTED! Total: 75
+>>> STEP DETECTED! Total: 76
+>>> STEP DETECTED! Total: 77
+[INFO] WiFi: OK | Steps: 77 | Var: 8236437.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 78
+>>> STEP DETECTED! Total: 79
+>>> STEP DETECTED! Total: 80
+>>> STEP DETECTED! Total: 81
+>>> STEP DETECTED! Total: 82
+[INFO] WiFi: OK | Steps: 82 | Var: 8500550.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 83
+>>> STEP DETECTED! Total: 84
+>>> STEP DETECTED! Total: 85
+>>> STEP DETECTED! Total: 86
+[INFO] WiFi: OK | Steps: 86 | Var: 8554200.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 87
+>>> STEP DETECTED! Total: 88
+>>> STEP DETECTED! Total: 89
+>>> STEP DETECTED! Total: 90
+[INFO] WiFi: OK | Steps: 90 | Var: 9045841.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 91
+>>> STEP DETECTED! Total: 92
+>>> STEP DETECTED! Total: 93
+>>> STEP DETECTED! Total: 94
+>>> STEP DETECTED! Total: 95
+[INFO] WiFi: OK | Steps: 95 | Var: 7422644.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 96
+>>> STEP DETECTED! Total: 97
+>>> STEP DETECTED! Total: 98
+>>> STEP DETECTED! Total: 99
+[INFO] WiFi: OK | Steps: 99 | Var: 4711940.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 100
+>>> STEP DETECTED! Total: 101
+>>> STEP DETECTED! Total: 102
+>>> STEP DETECTED! Total: 103
+>>> STEP DETECTED! Total: 104
+[INFO] WiFi: OK | Steps: 104 | Var: 5504283.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 105
+>>> STEP DETECTED! Total: 106
+>>> STEP DETECTED! Total: 107
+>>> STEP DETECTED! Total: 108
+[INFO] WiFi: OK | Steps: 108 | Var: 7424267.50 | Activity: WALKING
+>>> STEP DETECTED! Total: 109
+>>> STEP DETECTED! Total: 110
+>>> STEP DETECTED! Total: 111
+>>> STEP DETECTED! Total: 112
+>>> STEP DETECTED! Total: 113
+[INFO] WiFi: OK | Steps: 113 | Var: 9853399.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 114
+>>> STEP DETECTED! Total: 115
+>>> STEP DETECTED! Total: 116
+>>> STEP DETECTED! Total: 117
+>>> STEP DETECTED! Total: 118
+>>> STEP DETECTED! Total: 119
+[INFO] WiFi: OK | Steps: 119 | Var: 30388836.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 120
+>>> STEP DETECTED! Total: 121
+>>> STEP DETECTED! Total: 122
+>>> STEP DETECTED! Total: 123
+>>> STEP DETECTED! Total: 124
+[INFO] WiFi: OK | Steps: 124 | Var: 57134788.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 125
+>>> STEP DETECTED! Total: 126
+>>> STEP DETECTED! Total: 127
+>>> STEP DETECTED! Total: 128
+>>> STEP DETECTED! Total: 129
+>>> STEP DETECTED! Total: 130
+[INFO] WiFi: OK | Steps: 130 | Var: 60948224.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 131
+>>> STEP DETECTED! Total: 132
+>>> STEP DETECTED! Total: 133
+>>> STEP DETECTED! Total: 134
+>>> STEP DETECTED! Total: 135
+>>> STEP DETECTED! Total: 136
+[INFO] WiFi: OK | Steps: 136 | Var: 48845716.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 137
+>>> STEP DETECTED! Total: 138
+>>> STEP DETECTED! Total: 139
+>>> STEP DETECTED! Total: 140
+>>> STEP DETECTED! Total: 141
+>>> STEP DETECTED! Total: 142
+[INFO] WiFi: OK | Steps: 142 | Var: 44392116.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 143
+>>> STEP DETECTED! Total: 144
+>>> STEP DETECTED! Total: 145
+>>> STEP DETECTED! Total: 146
+>>> STEP DETECTED! Total: 147
+>>> STEP DETECTED! Total: 148
+[INFO] WiFi: OK | Steps: 148 | Var: 44500804.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 149
+>>> STEP DETECTED! Total: 150
+>>> STEP DETECTED! Total: 151
+>>> STEP DETECTED! Total: 152
+>>> STEP DETECTED! Total: 153
+>>> STEP DETECTED! Total: 154
+[INFO] WiFi: OK | Steps: 154 | Var: 45739624.00 | Activity: RUNNING
+>>> STEP DETECTED! Total: 155
+>>> STEP DETECTED! Total: 156
+>>> STEP DETECTED! Total: 157
+>>> STEP DETECTED! Total: 158
+[INFO] WiFi: OK | Steps: 158 | Var: 8841211.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 159
+>>> STEP DETECTED! Total: 160
+>>> STEP DETECTED! Total: 161
+[INFO] WiFi: OK | Steps: 161 | Var: 2833582.75 | Activity: WALKING
+>>> STEP DETECTED! Total: 162
+>>> STEP DETECTED! Total: 163
+[INFO] WiFi: OK | Steps: 163 | Var: 5353700.00 | Activity: WALKING
+>>> STEP DETECTED! Total: 164
+>>> STEP DETECTED! Total: 165
+>>> STEP DETECTED! Total: 166
+[INFO] WiFi: OK | Steps: 166 | Var: 1326705.63 | Activity: WALKING
+[INFO] WiFi: OK | Steps: 166 | Var: 204740.56 | Activity: RESTING
+[INFO] WiFi: OK | Steps: 166 | Var: 186769.91 | Activity: RESTING

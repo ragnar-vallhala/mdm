@@ -10,9 +10,11 @@ interface MetricWidgetProps {
     icon?: React.ReactNode;
     trend?: 'up' | 'down' | 'stable';
     history?: number[];
+    isGenerated?: boolean;
+    source?: string;
 }
 
-export const MetricWidget: React.FC<MetricWidgetProps> = ({ label, value, unit, color, icon, trend, history = [] }) => {
+export const MetricWidget: React.FC<MetricWidgetProps> = ({ label, value, unit, color, icon, trend, history = [], isGenerated, source }) => {
     const [isGraphMode, setIsGraphMode] = useState(false);
 
     // Generate SVG path for sparkline
@@ -51,7 +53,17 @@ export const MetricWidget: React.FC<MetricWidgetProps> = ({ label, value, unit, 
             </button>
 
             <div className="flex items-center justify-between">
-                <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{label}</span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-white/60 text-[10px] font-bold uppercase tracking-widest">{label}</span>
+                    {source && (
+                        <span className="text-[7px] text-white/30 font-mono border border-white/10 px-1 rounded uppercase tracking-tighter" title="Data Source">
+                            {source}
+                        </span>
+                    )}
+                    {isGenerated && (
+                        <span className="text-[8px] bg-white/10 text-white/40 px-1 rounded font-bold border border-white/5">GEN</span>
+                    )}
+                </div>
                 <div style={{ color }} className="opacity-80">
                     {icon}
                 </div>

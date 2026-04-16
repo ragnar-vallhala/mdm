@@ -7,19 +7,38 @@ import { MetricWidget } from './MetricWidget'
 type HealthData = {
     timestamp: number;
     heart_rate: number;
+    heart_rate_gen?: boolean;
+    heart_rate_source?: string;
     spo2: number;
+    spo2_gen?: boolean;
+    spo2_source?: string;
     breathing_rate: number;
+    breathing_rate_gen?: boolean;
+    breathing_rate_source?: string;
     gsr: number;
+    gsr_gen?: boolean;
+    gsr_source?: string;
     temperature: number;
+    temperature_gen?: boolean;
+    temperature_source?: string;
     dehydration_index: number;
+    dehydration_index_gen?: boolean;
+    dehydration_index_source?: string;
     posture: string;
+    posture_gen?: boolean;
+    posture_source?: string;
     fall_detected: boolean;
+    fall_detected_gen?: boolean;
+    fall_detected_source?: string;
     steps: number;
+    steps_gen?: boolean;
+    steps_source?: string;
 }
 
 export const HealthDashboard = () => {
     const [gender, setGender] = useState<'male' | 'female'>('male');
     const [activity, setActivity] = useState<'low' | 'high'>('low');
+    const [dataSource, setDataSource] = useState<'simulated' | 'consolidated'>('consolidated');
     const [allData, setAllData] = useState<HealthData[]>([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isPlaying, setIsPlaying] = useState(true);
@@ -28,30 +47,41 @@ export const HealthDashboard = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const response = await fetch(`/data/${gender}_${activity}.csv`);
+            const url = dataSource === 'simulated'
+                ? `/data/${gender}_${activity}.csv`
+                : `/data/consolidated_${gender}.csv`;
+
+            const response = await fetch(url);
             const text = await response.text();
-            const rows = text.split('\n').slice(1);
-            const parsedData = rows.filter(row => row.trim() !== '').map(row => {
-                const [timestamp, heart_rate, spo2, breathing_rate, gsr, temperature, dehydration_index, posture, fall_detected, steps] = row.split(',');
-                return {
-                    timestamp: parseFloat(timestamp),
-                    heart_rate: parseFloat(heart_rate),
-                    spo2: parseFloat(spo2),
-                    breathing_rate: parseFloat(breathing_rate),
-                    gsr: parseFloat(gsr),
-                    temperature: parseFloat(temperature),
-                    dehydration_index: parseFloat(dehydration_index),
-                    posture: posture,
-                    fall_detected: fall_detected === 'true',
-                    steps: parseInt(steps)
-                };
+            const rows = text.split('\n');
+            const headers = rows[0].split(',').map(h => h.trim());
+            const body = rows.slice(1);
+
+            const parsedData = body.filter(row => row.trim() !== '').map(row => {
+                const values = row.split(',');
+                const data: any = {};
+                headers.forEach((header, index) => {
+                    const val = values[index];
+                    if (header.endsWith('_gen')) {
+                        data[header] = val ? val.toLowerCase() === 'true' : false;
+                    } else if (header.endsWith('_source')) {
+                        data[header] = val || 'SIM';
+                    } else if (header === 'posture') {
+                        data[header] = val || 'Unknown';
+                    } else if (header === 'fall_detected') {
+                        data[header] = val ? val.toLowerCase() === 'true' : false;
+                    } else {
+                        data[header] = parseFloat(val) || 0;
+                    }
+                });
+                return data as HealthData;
             });
             setAllData(parsedData);
             setCurrentIndex(0);
         };
 
         fetchData();
-    }, [gender, activity]);
+    }, [gender, activity, dataSource]);
 
     useEffect(() => {
         if (isPlaying && allData.length > 0) {
@@ -96,6 +126,18 @@ export const HealthDashboard = () => {
 
                 <div className="flex flex-wrap items-center justify-center gap-4">
                     <div className="flex flex-col gap-1">
+                        <label className="text-[10px] uppercase font-bold text-white/40 ml-1">Source</label>
+                        <select
+                            value={dataSource}
+                            onChange={(e) => setDataSource(e.target.value as any)}
+                            className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm focus:outline-none focus:border-white/30"
+                        >
+                            <option value="consolidated">Real Consolidated</option>
+                            <option value="simulated">Simulated Data</option>
+                        </select>
+                    </div>
+
+                    <div className="flex flex-col gap-1">
                         <label className="text-[10px] uppercase font-bold text-white/40 ml-1">Gender</label>
                         <select
                             value={gender}
@@ -107,17 +149,19 @@ export const HealthDashboard = () => {
                         </select>
                     </div>
 
-                    <div className="flex flex-col gap-1">
-                        <label className="text-[10px] uppercase font-bold text-white/40 ml-1">Activity Level</label>
-                        <select
-                            value={activity}
-                            onChange={(e) => setActivity(e.target.value as any)}
-                            className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm focus:outline-none focus:border-white/30"
-                        >
-                            <option value="low">Low</option>
-                            <option value="high">High</option>
-                        </select>
-                    </div>
+                    {dataSource === 'simulated' && (
+                        <div className="flex flex-col gap-1">
+                            <label className="text-[10px] uppercase font-bold text-white/40 ml-1">Activity Level</label>
+                            <select
+                                value={activity}
+                                onChange={(e) => setActivity(e.target.value as any)}
+                                className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm focus:outline-none focus:border-white/30"
+                            >
+                                <option value="low">Low</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                    )}
 
                     <div className="flex items-end">
                         <button
@@ -162,6 +206,8 @@ export const HealthDashboard = () => {
                         color="var(--color-hr-pulse)"
                         trend={current.heart_rate > 90 ? 'up' : 'stable'}
                         history={getHistory('heart_rate')}
+                        isGenerated={current.heart_rate_gen}
+                        source={current.heart_rate_source}
                     />
                     <MetricWidget
                         label="SPO2"
@@ -170,6 +216,8 @@ export const HealthDashboard = () => {
                         color="var(--color-spo2)"
                         trend={current.spo2 < 95 ? 'down' : 'stable'}
                         history={getHistory('spo2')}
+                        isGenerated={current.spo2_gen}
+                        source={current.spo2_source}
                     />
                     <MetricWidget
                         label="Breathing"
@@ -177,6 +225,8 @@ export const HealthDashboard = () => {
                         unit="RPM"
                         color="var(--color-br)"
                         history={getHistory('breathing_rate')}
+                        isGenerated={current.breathing_rate_gen}
+                        source={current.breathing_rate_source}
                     />
                     <MetricWidget
                         label="GSR"
@@ -184,6 +234,8 @@ export const HealthDashboard = () => {
                         unit="μS"
                         color="var(--color-gsr)"
                         history={getHistory('gsr')}
+                        isGenerated={current.gsr_gen}
+                        source={current.gsr_source}
                     />
                 </div>
 
@@ -195,6 +247,8 @@ export const HealthDashboard = () => {
                         unit="°C"
                         color="var(--color-temp)"
                         history={getHistory('temperature')}
+                        isGenerated={current.temperature_gen}
+                        source={current.temperature_source}
                     />
                     <MetricWidget
                         label="Dehydration"
@@ -202,6 +256,8 @@ export const HealthDashboard = () => {
                         unit="/ 10"
                         color="var(--color-dehyd)"
                         history={getHistory('dehydration_index')}
+                        isGenerated={current.dehydration_index_gen}
+                        source={current.dehydration_index_source}
                     />
                     <MetricWidget
                         label="Step Count"
@@ -209,6 +265,8 @@ export const HealthDashboard = () => {
                         unit="Steps"
                         color="#ffffff"
                         history={getHistory('steps')}
+                        isGenerated={current.steps_gen}
+                        source={current.steps_source}
                     />
 
                     {/* Fall Status Card */}
