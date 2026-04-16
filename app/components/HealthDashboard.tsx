@@ -178,7 +178,13 @@ export const HealthDashboard = () => {
                 {/* Silhouette - Shown FIRST on mobile, middle on desktop */}
                 <div className="order-1 md:order-2 md:col-span-6 glass relative flex items-center justify-center min-h-[400px] md:h-full">
                     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
-                    <HumanSilhouette gender={gender} hr={current.heart_rate} br={current.breathing_rate} />
+                    <HumanSilhouette
+                        gender={gender}
+                        hr={current.heart_rate}
+                        br={current.breathing_rate}
+                        spo2={current.spo2}
+                        gsr={current.gsr}
+                    />
 
                     {current.fall_detected && (
                         <div className="absolute inset-0 bg-red-500/20 border-4 border-red-500 animate-pulse flex items-center justify-center pointer-events-none z-20">
