@@ -43,9 +43,9 @@ export const HumanSilhouette: React.FC<SilhouetteProps> = ({ gender, hr, br }) =
                 {/* Lungs (Breathing area) */}
                 <ellipse
                     cx="115"
-                    cy="160"
+                    cy="155"
                     rx="30"
-                    ry="40"
+                    ry="30"
                     className="breathing fill-br/20"
                     style={{ '--breathe-duration': brDuration } as any}
                 />

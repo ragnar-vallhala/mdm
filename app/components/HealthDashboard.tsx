@@ -82,19 +82,25 @@ export const HealthDashboard = () => {
         steps: 0
     };
 
+    // History window (last 30 points)
+    const getHistory = (key: keyof HealthData) => {
+        const start = Math.max(0, currentIndex - 30);
+        return allData.slice(start, currentIndex + 1).map(d => d[key] as number);
+    };
+
     return (
-        <div className="w-screen h-screen bg-black flex flex-col p-8 gap-8 overflow-hidden select-none">
+        <div className="w-full min-h-screen bg-black flex flex-col p-4 md:p-8 gap-4 md:gap-8 overflow-y-auto">
             {/* Header / Selectors */}
-            <div className="flex items-center justify-between glass p-4 z-10">
+            <div className="flex flex-col md:flex-row items-center justify-between glass p-4 z-10 gap-4 shrink-0">
                 <h1 className="text-2xl font-black italic tracking-tighter text-white/90">VITAL_OS</h1>
 
-                <div className="flex gap-4">
+                <div className="flex flex-wrap items-center justify-center gap-4">
                     <div className="flex flex-col gap-1">
                         <label className="text-[10px] uppercase font-bold text-white/40 ml-1">Gender</label>
                         <select
                             value={gender}
                             onChange={(e) => setGender(e.target.value as any)}
-                            className="bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/30"
+                            className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm focus:outline-none focus:border-white/30"
                         >
                             <option value="male">Male</option>
                             <option value="female">Female</option>
@@ -106,7 +112,7 @@ export const HealthDashboard = () => {
                         <select
                             value={activity}
                             onChange={(e) => setActivity(e.target.value as any)}
-                            className="bg-black/50 border border-white/10 rounded-lg px-4 py-2 text-sm focus:outline-none focus:border-white/30"
+                            className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 md:px-4 md:py-2 text-xs md:text-sm focus:outline-none focus:border-white/30"
                         >
                             <option value="low">Low</option>
                             <option value="high">High</option>
@@ -116,7 +122,7 @@ export const HealthDashboard = () => {
                     <div className="flex items-end">
                         <button
                             onClick={() => setIsPlaying(!isPlaying)}
-                            className="bg-white text-black font-bold px-6 py-2 rounded-lg text-sm hover:bg-white/90 transition-colors uppercase"
+                            className="bg-white text-black font-bold px-4 py-1.5 md:px-6 md:py-2 rounded-lg text-xs md:text-sm hover:bg-white/90 transition-colors uppercase"
                         >
                             {isPlaying ? 'Pause' : 'Play'}
                         </button>
@@ -124,15 +130,38 @@ export const HealthDashboard = () => {
                 </div>
             </div>
 
-            <div className="flex-1 grid grid-cols-12 gap-8 min-h-0">
-                {/* Left Column - Metrics */}
-                <div className="col-span-3 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-8">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 h-auto">
+                {/* Silhouette - Shown FIRST on mobile, middle on desktop */}
+                <div className="order-1 md:order-2 md:col-span-6 glass relative flex items-center justify-center min-h-[400px] md:h-full">
+                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
+                    <HumanSilhouette gender={gender} hr={current.heart_rate} br={current.breathing_rate} />
+
+                    {current.fall_detected && (
+                        <div className="absolute inset-0 bg-red-500/20 border-4 border-red-500 animate-pulse flex items-center justify-center pointer-events-none z-20">
+                            <span className="text-2xl md:text-4xl font-black text-red-500 drop-shadow-2xl">FALL DETECTED</span>
+                        </div>
+                    )}
+
+                    <div className="absolute bottom-4 left-4 md:bottom-8 md:left-8 flex flex-col pointer-events-none">
+                        <span className="text-white/40 text-[8px] md:text-[10px] uppercase font-bold">Current Posture</span>
+                        <span className="text-lg md:text-2xl font-black">{current.posture}</span>
+                    </div>
+
+                    <div className="absolute bottom-4 right-4 md:bottom-8 md:right-8 text-right flex flex-col pointer-events-none">
+                        <span className="text-white/40 text-[8px] md:text-[10px] uppercase font-bold">Playback</span>
+                        <span className="font-mono text-xs md:text-sm">{Math.floor(current.timestamp / 60)}:{String(current.timestamp % 60).padStart(2, '0')}</span>
+                    </div>
+                </div>
+
+                {/* Left Column Metrics */}
+                <div className="order-2 md:order-1 md:col-span-3 flex flex-col gap-4 pb-4 md:pb-8">
                     <MetricWidget
                         label="Heart Rate"
                         value={current.heart_rate.toFixed(0)}
                         unit="BPM"
                         color="var(--color-hr-pulse)"
                         trend={current.heart_rate > 90 ? 'up' : 'stable'}
+                        history={getHistory('heart_rate')}
                     />
                     <MetricWidget
                         label="SPO2"
@@ -140,62 +169,46 @@ export const HealthDashboard = () => {
                         unit="%"
                         color="var(--color-spo2)"
                         trend={current.spo2 < 95 ? 'down' : 'stable'}
+                        history={getHistory('spo2')}
                     />
                     <MetricWidget
                         label="Breathing"
                         value={current.breathing_rate.toFixed(0)}
                         unit="RPM"
                         color="var(--color-br)"
+                        history={getHistory('breathing_rate')}
                     />
                     <MetricWidget
                         label="GSR"
                         value={current.gsr.toFixed(2)}
                         unit="μS"
                         color="var(--color-gsr)"
+                        history={getHistory('gsr')}
                     />
                 </div>
 
-                {/* Center - Human Silhouette */}
-                <div className="col-span-6 glass relative overflow-hidden flex items-center justify-center">
-                    <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.2)_0%,transparent_70%)] pointer-events-none" />
-                    <HumanSilhouette gender={gender} hr={current.heart_rate} br={current.breathing_rate} />
-
-                    {current.fall_detected && (
-                        <div className="absolute inset-0 bg-red-500/20 border-4 border-red-500 animate-pulse flex items-center justify-center pointer-events-none">
-                            <span className="text-4xl font-black text-red-500 drop-shadow-2xl">FALL DETECTED</span>
-                        </div>
-                    )}
-
-                    <div className="absolute bottom-8 left-8 flex flex-col">
-                        <span className="text-white/40 text-[10px] uppercase font-bold">Current Posture</span>
-                        <span className="text-2xl font-black">{current.posture}</span>
-                    </div>
-
-                    <div className="absolute bottom-8 right-8 text-right flex flex-col">
-                        <span className="text-white/40 text-[10px] uppercase font-bold">Playback</span>
-                        <span className="font-mono text-sm">{Math.floor(current.timestamp / 60)}:{String(current.timestamp % 60).padStart(2, '0')}</span>
-                    </div>
-                </div>
-
-                {/* Right Column - Remaining Metrics */}
-                <div className="col-span-3 flex flex-col gap-4 overflow-y-auto no-scrollbar pb-8">
+                {/* Right Column Metrics */}
+                <div className="order-3 md:col-span-3 flex flex-col gap-4 pb-8">
                     <MetricWidget
                         label="Temperature"
                         value={current.temperature.toFixed(1)}
                         unit="°C"
                         color="var(--color-temp)"
+                        history={getHistory('temperature')}
                     />
                     <MetricWidget
                         label="Dehydration"
                         value={current.dehydration_index.toFixed(1)}
                         unit="/ 10"
                         color="var(--color-dehyd)"
+                        history={getHistory('dehydration_index')}
                     />
                     <MetricWidget
                         label="Step Count"
                         value={current.steps.toLocaleString()}
                         unit="Steps"
                         color="#ffffff"
+                        history={getHistory('steps')}
                     />
 
                     {/* Fall Status Card */}
